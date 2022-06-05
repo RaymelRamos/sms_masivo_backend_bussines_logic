@@ -1,0 +1,57 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">Enviar sms</h5>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                    <label>Motivo</label>
+                                    <input type="text" name="topic" [(ngModel)]="topic" class="form-control"
+                                        placeholder="Motivo" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                    <label>Grupos</label>
+                                    <ng-multiselect-dropdown name="groups_list" [placeholder]="'Adicionar grupos'"
+                                        [settings]="dropdownSettings" [data]="groups_list" [(ngModel)]="groups_selected"
+                                        (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+                                    </ng-multiselect-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                    <label>Mensaje</label>
+                                    <textarea rows="4" name="message" cols="80" class="form-control"
+                                        [(ngModel)]="message" placeholder="Escriba su mensaje aquí" value="Mike"
+                                        style="font-size: 18px;">
+                                    </textarea>
+                                    <div class="text-right">
+                                        <label>Caracteres restantes: {{ (message.length > 120) ? ( '***' ) : ( message.length ) }} / 120</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="text-right">
+                        <input class="btn btn-primary" (click)="submit()" type="button" value="Enviar" title="Enviar sms" />
+                        <input class="btn btn-default" type="button" value="Cancelar" />
+                      </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+</div>
