@@ -1,0 +1,196 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">{{ title }}</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="title">Editar Grupo</h5>
+                  <h5 class="card-category">
+                    <input class="btn btn-sm btn-warning" type="button" value="Descargar plantilla" />
+                  </h5>
+                </div>
+                <div class="card-body">
+                  <form>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>Nombre</label>
+                          <input type="text" name="group_name" class="form-control" [(ngModel)]="group_name" placeholder="Nombre">
+                        </div>
+                      </div>
+                      <div class="col-md-6 pl-1">
+                        <div class="form-group">
+                          <label>Importar fichero CSV <h3><span class="badge badge-primary">Click aquí</span></h3>
+                          </label>
+                          <input type="file" name="Upload CSV" id="txtFileUpload" (change)="uploadListener($event)"
+                            accept=".csv" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="card  card-tasks">
+                          <div class="card-header ">
+                            <h5 class="card-category">Listado de destinatarios</h5>
+                            <input class="btn btn-sm btn-primary" (click)="open(content)" type="button"
+                              value="Añadir" />
+                          </div>
+                          <div class="card-body ">
+                            <div class="table-full-width table-responsive" style="overflow-x:auto; height: 200px;">
+                              <table class="table minimalistBlack" *ngIf="records.length > 0">
+                                <tbody>
+                                  <tr *ngFor="let record of records; let i = index;">
+                                    <td class="text-left">{{record.name}}
+                                    </td>
+                                    <td class="text-left"> {{record.phone_number}}
+                                    </td>
+                                    <td class="text-left"> {{record.email}}
+                                    </td>
+                                    <td class="td-actions text-right">
+                                      <button type="button" rel="tooltip" title="Editar"
+                                        class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral"
+                                        data-original-title="Editar destinatario" (click)="open(content, record, i)">
+                                        <i class="now-ui-icons ui-2_settings-90"></i>
+                                      </button>
+                                      <button type="button" rel="tooltip" title="Eliminar"
+                                        class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral"
+                                        data-original-title="Eliminar" (click)="removeTarget(i)">
+                                        <i class="now-ui-icons ui-1_simple-remove"></i>
+                                      </button>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                          <div class="card-footer">
+                            Errores encontrados: {{errores_detectados_csv}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="group_description">Descripción del grupo</label>
+                          <textarea name="group_description" [(ngModel)]="group_description" rows="4" cols="80" class="form-control" placeholder="Especifique una pequeña descripción" value="Mike"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  <div class="text-right">
+                    <input class="btn btn-primary" [disabled]="(errores_detectados_csv >= 0) && group_name === ''" type="button" value="Aceptar" title="Crear grupo" (click)="submit()" />
+                    <input class="btn btn-default" type="button" value="Cancelar" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="card-title"> Listado de grupos</h4>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class=" text-primary">
+                        <th>
+                          Identificador
+                        </th>
+                        <th>
+                          Nombre
+                        </th>
+                        <th>
+                          No. Destinatarios
+                        </th>
+                        <th class="text-right">
+                        </th>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let group of list_groups; let i = index;">
+                          <td>
+                            {{'G_' + group.name.replace(' ', '_') | uppercase}}
+                          </td>
+                          <td>
+                            {{group.name}}
+                          </td>
+                          <td>
+                            {{group.target_list.length}}
+                          </td>
+                          <td class="td-actions text-right">
+                            <button type="button" rel="tooltip" title="Editar"
+                                        class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral"
+                                        data-original-title="Editar destinatario" (click)="show_group(group)">
+                                        <i class="now-ui-icons ui-2_settings-90"></i>
+                                      </button>
+                            <button type="button" rel="tooltip" title=""
+                              class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral"
+                              data-original-title="Remove" (click)="remove(group.uuid)">
+                              <i class="now-ui-icons ui-1_simple-remove"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" name="name" class="form-control" placeholder="Nombre" [(ngModel)]="edit_target.name"
+              value="{{edit_target.name}}" required #name="ngModel">
+            <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert">
+
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>No. de teléfono</label>
+            <input type="text" name="phone_number" class="form-control" placeholder="No. de teléfono"
+              [(ngModel)]="edit_target.phone_number" value="{{edit_target.phone_number}}">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Correo</label>
+            <input type="text" name="email" class="form-control" placeholder="Correo" [(ngModel)]="edit_target.email"
+              value="{{edit_target.email}}">
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <input class="btn btn-primary" [disabled]="!(phoneNumberValidation() && emailValidation())" type="button" (click)="modal.close('Save')" value="Aceptar" />
+    <input class="btn btn-default" type="button" (click)="modal.close('Cancel')" value="Cancelar" />
+  </div>
+</ng-template>
