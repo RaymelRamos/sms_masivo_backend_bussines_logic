@@ -1,0 +1,18 @@
+<div class="background-wrap">
+    <div class="background"></div>
+  </div>
+  
+  <form id="accesspanel" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <h1 id="litheader">SMS MASIVO</h1>
+    <div class="inset">
+      <p>
+        <input type="text" formControlName="username" class="form-control" name="username" id="email" placeholder="Nombre de usuario">
+      </p>
+      <p>
+        <input type="password" formControlName="password" class="form-control" name="password" id="password" placeholder="Contraseña">
+      </p>
+    </div>
+    <p class="p-container">
+      <input type="submit" name="Login" id="go" value="Entrar">
+    </p>
+  </form>

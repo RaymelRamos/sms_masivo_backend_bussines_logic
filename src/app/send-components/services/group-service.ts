@@ -11,7 +11,7 @@ import { GroupModel as Grupo } from '../models/group-model';
 })
 export class GroupService {
 
-  private groupUrl = environment.apiUrl + '/group';
+  private groupUrl = environment.apiUrl + '/bussines/group';
 
    constructor(private http: HttpClient) { }
   
@@ -20,7 +20,7 @@ export class GroupService {
     return this.http.post<Grupo>(this.groupUrl, grupo, { headers })
       .pipe(
         tap(data => console.log('createGroup: ' + JSON.stringify(data))),
-        catchError(this.handleError)
+        // catchError(this.handleError)
       );
   }
 
@@ -31,7 +31,7 @@ export class GroupService {
         tap(() => console.log('updateGroup: ' + grupo.uuid)),
         // Return the product on an update
         map(() => grupo),
-        catchError(this.handleError)
+        // catchError(this.handleError)
       );
   }
 
@@ -41,7 +41,7 @@ export class GroupService {
     return this.http.delete<Grupo>(`${this.groupUrl}/${id}`, { headers })
       .pipe(
         tap(data => console.log('deleteGroup: ' + id)),
-        catchError(this.handleError)
+        // catchError(this.handleError)
       );
   }
  
@@ -49,7 +49,7 @@ export class GroupService {
     return this.http.get<Grupo[]>(this.groupUrl)
       .pipe(
         tap(data => console.log('All: ' + JSON.stringify(data))),
-        catchError(this.handleError)
+        // catchError(this.handleError)
       );
   }
 
@@ -57,7 +57,7 @@ export class GroupService {
     return this.http.get<Grupo[]>(this.groupUrl + '/simple')
       .pipe(
         tap(data => console.log('All: ' + JSON.stringify(data))),
-        catchError(this.handleError)
+        // catchError(this.handleError)
       );
   }
 
@@ -65,23 +65,24 @@ export class GroupService {
     return this.http.get<Grupo>(this.groupUrl + `/group/${uuid}`)
       .pipe(
         tap(data => console.log('All: ' + JSON.stringify(data))),
-        catchError(this.handleError)
+        // catchError(this.handleError)
       );
   }
 
-  private handleError(err: HttpErrorResponse): Observable<never> {
-    // in a real world app, we may send the server to some remote logging infrastructure
-    // instead of just logging it to the console
-    let errorMessage = '';
-    if (err.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
-      errorMessage = `An error occurred: ${err.error.message}`;
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
-      errorMessage = `Server returned code: ${err.status}, error message is: ${err.message}`;
-    }
-    console.error(errorMessage);
-    return throwError(errorMessage);
-  }
+  // private handleError(err: HttpErrorResponse): Observable<never> {
+  //   // in a real world app, we may send the server to some remote logging infrastructure
+  //   // instead of just logging it to the console
+  //   let errorMessage = '';
+  //   console.log(err)
+  //   if (err.error instanceof ErrorEvent) {
+  //     // A client-side or network error occurred. Handle it accordingly.
+  //     errorMessage = `An error occurred: ${err.error.message}`;
+  //   } else {
+  //     // The backend returned an unsuccessful response code.
+  //     // The response body may contain clues as to what went wrong,
+  //     errorMessage = `Server returned code: ${err.status}, error message is: ${err.message}`;
+  //   }
+  //   console.error(errorMessage);
+  //   return throwError(errorMessage);
+  // }
 }

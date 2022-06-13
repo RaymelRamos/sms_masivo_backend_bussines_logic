@@ -12,7 +12,7 @@ import { SMSModel } from '../models/sms-model';
 })
 export class SmsService {
 
-  private smsUrl = environment.apiUrl + '/sms';
+  private smsUrl = environment.apiUrl + '/bussines/sms';
 
   constructor(private http: HttpClient) { }
 
